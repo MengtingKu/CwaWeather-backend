@@ -1,16 +1,29 @@
-# CWA 天氣預報 API 服務
+# CWA 天氣預報 API 服務 (TypeScript 版)
 
-這是一個使用 Node.js + Express 開發的天氣預報 API 服務，串接中央氣象署（CWA）開放資料平台，提供高雄市天氣預報資料。
+> 最後更新日期：2026-02-20
 
-## 功能特色
+這是一個使用 Node.js + Express + TypeScript 開發的高標準天氣預報 API 服務，提供座標轉縣市並自動串接中央氣象署 (CWA) 天氣資料的功能。
 
-- ✅ 串接 CWA 氣象資料開放平台
-- ✅ 取得高雄市 36 小時天氣預報
-- ✅ 環境變數管理
-- ✅ RESTful API 設計
-- ✅ CORS 支援
+## 🌟 功能特色
 
-## 安裝步驟
+- **TypeScript 嚴格型別**: 全面使用 TypeScript 開發，確保程式碼健壯性。
+- **座標自動轉縣市**: 前端傳送經緯度，後端自動判斷台灣 22 縣市。
+- **預設智慧值**: 若請求未帶座標，系統智慧預設提供「臺中市」天氣。
+- **Zod 參數驗證**: 強大的 Schema 驗證，確保 API 請求參數合法性。
+- **單元測試 (Vitest)**: 包含地理座標處理邏輯的測試案例，確保精準度。
+- **生產等級錯誤處理**: 完善的錯誤捕捉機制與標準化 JSON 回應格式。
+
+## 🛠 技術棧
+
+- **Runtime**: Node.js
+- **Framework**: Express
+- **Language**: TypeScript (Strict Mode)
+- **Validation**: Zod
+- **API Client**: Axios
+- **Testing**: Vitest
+- **Environment**: Dotenv, Cors
+
+## 🚀 快速開始
 
 ### 1. 安裝相依套件
 
@@ -20,152 +33,82 @@ npm install
 
 ### 2. 設定環境變數
 
-在專案根目錄建立 `.env` 檔案：
-
-```bash
-touch .env
-```
-
-編輯 `.env` 檔案，填入你的 CWA API Key：
+在根目錄建立 `.env`：
 
 ```env
-CWA_API_KEY=your_api_key_here
+CWA_API_KEY=你的中央氣象署API授權碼
 PORT=3000
 NODE_ENV=development
 ```
 
-### 3. 取得 CWA API Key
-
-1. 前往 [氣象資料開放平臺](https://opendata.cwa.gov.tw/)
-2. 註冊/登入帳號
-3. 前往「會員專區」→「取得授權碼」
-4. 複製 API 授權碼
-5. 將授權碼填入 `.env` 檔案的 `CWA_API_KEY`
-
-## 啟動服務
-
-### 開發模式（自動重啟）
+### 3. 開發模式啟動
 
 ```bash
 npm run dev
 ```
 
-### 正式模式
+### 4. 執行測試
 
 ```bash
-npm start
+npm run test:run
 ```
 
-伺服器會在 `http://localhost:3000` 啟動
+## 📡 API 文件
 
-## API 端點
+### 取得座標天氣預報
 
-### 1. 首頁
+根據經緯度取得對應縣市的 36 小時天氣預報。
 
-```
-GET /
-```
+- **URL**: `/api/weather`
+- **Method**: `GET`
+- **Query Params**:
+  - `lat` (Optional): 緯度 (21.5 ~ 26.5)。預設值: 24.1477 (臺中市)
+  - `lng` (Optional): 經度 (118.0 ~ 122.5)。預設值: 120.6736 (臺中市)
 
-回應：
-
-```json
-{
-  "message": "歡迎使用 CWA 天氣預報 API",
-  "endpoints": {
-    "kaohsiung": "/api/weather/kaohsiung",
-    "health": "/api/health"
-  }
-}
-```
-
-### 2. 健康檢查
-
-```
-GET /api/health
-```
-
-回應：
-
-```json
-{
-  "status": "OK",
-  "timestamp": "2025-09-30T12:00:00.000Z"
-}
-```
-
-### 3. 取得高雄天氣預報
-
-```
-GET /api/weather/kaohsiung
-```
-
-回應範例：
+#### 成功回應實例
 
 ```json
 {
   "success": true,
   "data": {
-    "city": "高雄市",
-    "updateTime": "資料更新時間說明",
+    "city": "臺北市",
+    "updateTime": "三十六小時天氣預報",
     "forecasts": [
       {
-        "startTime": "2025-09-30 18:00:00",
-        "endTime": "2025-10-01 06:00:00",
-        "weather": "多雲時晴",
-        "rain": "10%",
-        "minTemp": "25°C",
-        "maxTemp": "32°C",
-        "comfort": "悶熱",
-        "windSpeed": "偏南風 3-4 級"
+        "startTime": "2026-02-21 00:00:00",
+        "endTime": "2026-02-21 06:00:00",
+        "weather": "晴時多雲",
+        "rain": "0%",
+        "minTemp": "18°C",
+        "maxTemp": "22°C",
+        "comfort": "舒適",
+        "windSpeed": ""
       }
     ]
   }
 }
 ```
 
-## 專案結構
+## 📂 專案結構
 
-```
+```text
 CwaWeather-backend/
-├── server.js              # Express 伺服器主檔案（包含路由與控制器邏輯）
-├── .env                   # 環境變數（不納入版控）
-├── .gitignore            # Git 忽略檔案
-├── package.json          # 專案設定與相依套件
-├── package-lock.json     # 套件版本鎖定檔案
-└── README.md            # 說明文件
+├── backend/
+│   ├── controllers/      # 請求處理邏輯 (Zod 驗證)
+│   ├── services/         # 業務邏輯 (GeoService, WeatherService)
+│   ├── routes/           # API 路由定義
+│   ├── app.ts            # Express 應用配置
+│   └── server.ts         # 伺服器啟動入口
+├── shared-contract/      # 前後端共享 DTO 型別
+├── tsconfig.json         # TypeScript 配置
+└── package.json          # 腳本與相依套件
 ```
 
-## 使用的套件
+## ⚠️ 注意事項
 
-- **express**: Web 框架
-- **axios**: HTTP 客戶端
-- **dotenv**: 環境變數管理
-- **cors**: 跨域資源共享
-- **nodemon**: 開發時自動重啟（開發環境）
-
-## 注意事項
-
-1. 請確保已申請 CWA API Key 並正確設定在 `.env` 檔案中
-2. API Key 有每日呼叫次數限制，請參考 CWA 平台說明
-3. 不要將 `.env` 檔案上傳到 Git 版本控制（已包含在 `.gitignore` 中）
-4. 所有路由與業務邏輯都在 `server.js` 檔案中，適合小型專案使用
-
-## 錯誤處理
-
-API 會回傳適當的 HTTP 狀態碼和錯誤訊息：
-
-- `200`: 成功
-- `404`: 找不到資料
-- `500`: 伺服器錯誤
-
-錯誤回應格式：
-
-```json
-{
-  "error": "錯誤類型",
-  "message": "錯誤訊息"
-}
-```
+1. 座標判斷採用矩形區域簡化算法，涵蓋台灣本島與金馬澎離島共 22 縣市。
+2. 超出台灣地理範圍的座標將回傳 `400 Bad Request`。
+3. 請確保 CWA API Key 有效且未達每日限額。
 
 ## 授權
 

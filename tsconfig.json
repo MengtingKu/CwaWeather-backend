@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "rootDir": "./",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["shared-contract/*"],
+      "@backend/*": ["backend/*"]
+    }
+  },
+  "include": ["backend/**/*.ts", "shared-contract/**/*.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
