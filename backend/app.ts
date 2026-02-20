@@ -10,6 +10,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
+app.get('/', (req, res) => {
+  res.json({
+    message: "歡迎使用 CWA 天氣預報 API (TypeScript)",
+    endpoints: {
+      weather: "/api/weather",
+      kaohsiung: "/api/weather/kaohsiung",
+      health: "/api/health"
+    }
+  });
+});
+
 app.use('/api/weather', weatherRoutes);
 
 // Health Check
