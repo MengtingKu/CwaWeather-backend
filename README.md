@@ -1,8 +1,10 @@
 # CWA 天氣預報 API 服務 (TypeScript 版)
 
-> 最後更新日期：2026-02-20
+[![Antigravity](https://img.shields.io/badge/Agent-Antigravity-blueviolet)](https://github.com/google-deepmind/antigravity)
 
-這是一個使用 Node.js + Express + TypeScript 開發的高標準天氣預報 API 服務，提供座標轉縣市並自動串接中央氣象署 (CWA) 天氣資料的功能。
+> 最後更新日期：2026-02-21
+
+這是一個符合 **Antigravity 工程規範** 的 Node.js + Express + TypeScript API 服務。專案具備標準化工作流、嚴格型別檢查與現代化前端樣式。
 
 ## 🌟 功能特色
 

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getWeatherByCoords, getKaohsiungWeather } from '../controllers/weather.controller';
+import { getWeatherByCoords, getTaichungWeather } from '../controllers/weather.controller';
 
 const router = Router();
 
@@ -10,9 +10,9 @@ const router = Router();
 router.get('/', getWeatherByCoords);
 
 /**
- * @route GET /api/weather/kaohsiung
- * @desc 取得高雄天氣預報 (相容舊版)
+ * @route GET /api/weather/taichung
+ * @desc 取得臺中市天氣預報 (相容舊版)
  */
-router.get('/kaohsiung', getKaohsiungWeather);
+router.get('/taichung', getTaichungWeather);
 
 export default router;

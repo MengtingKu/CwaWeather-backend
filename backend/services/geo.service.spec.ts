@@ -27,6 +27,12 @@ describe('GeoService', () => {
     expect(city).toBe('連江縣');
   });
 
+  it('should return 臺中市 as fallback for coordinates within Taiwan range but no specific zone match', () => {
+    // 21.6, 118.1 is within the broad Taiwan box but outside the defined simplified city zones
+    const city = getCityFromCoords(21.6, 118.1);
+    expect(city).toBe('臺中市');
+  });
+
   it('should throw error for coordinates far outside Taiwan', () => {
     expect(() => getCityFromCoords(0, 0)).toThrow('座標超出台灣範圍');
   });

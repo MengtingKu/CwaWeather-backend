@@ -44,5 +44,5 @@ export const getCityFromCoords = (latitude: number, longitude: number): string =
     longitude >= c.lngRange[0] && longitude <= c.lngRange[1]
   );
 
-  return city ? city.name : '臺北市'; // 預設或 fallback
+  return city ? city.name : '臺中市'; // 預設或 fallback
 };
